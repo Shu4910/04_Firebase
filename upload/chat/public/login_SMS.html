@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+    <h1 class="login">ログイン画面（SMS）</h1>
+
+  <div id="recaptcha-container"></div>
+  <p>電話番号※先頭の0は不要です  例+818058039058</p>
+  <div class="sms_center">
+  <input type="text" id="phone-number" class="sms_input" placeholder="Phone Number" value="+81"/>
+  <button onclick="sendVerificationCode()">認証番号を送信</button>
+  </div>
+
+  <div class="sms_center">
+  <p>認証番号を入力してください</p>
+  <input type="text" id="verification-code" class="sms_input" placeholder="Verification Code"/>
+  <button onclick="verifyPhoneNumber()">ログイン</button>
+  </div>
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><!--/JQuery -->
+<script type="module">
+//###############################################
+// 必要なFirebaseライブラリを読み込み
+//###############################################
+import { initializeApp } 
+    from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js";
+
+
+//###############################################
+//FirebaseConfig [ KEYを取得して設定！！ ]
+//###############################################
+const firebaseConfig = {
+  };
+
+  f
+const app = initializeApp(firebaseConfig);
+
+</script>
+
+
+
+  <script>
+    // TODO: Replace the following with your app's Firebase project configuration
+      const firebaseConfig = {
+    apiKey: "AIzaSyA3wtmmYb5wvlZRJE2Vjn0DMuetoj6gz9I",
+    authDomain: "authexam-7d627.firebaseapp.com",
+    projectId: "authexam-7d627",
+    storageBucket: "authexam-7d627.appspot.com",
+    messagingSenderId: "567488091504",
+    appId: "1:567488091504:web:81ed5c00ec6f4f2160abb5"
+  };
+
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+    function sendVerificationCode() {
+      var phoneNumber = document.getElementById('phone-number').value;
+      var appVerifier = window.recaptchaVerifier;
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function (confirmationResult) {
+            alert('コードを送信しました')
+            window.confirmationResult = confirmationResult;
+          }).catch(function (error) {
+            console.log(error);
+            // Error; SMS not sent
+            // ...
+          });
+    }
+
+    function verifyPhoneNumber() {
+      var code = document.getElementById('verification-code').value;
+      confirmationResult.confirm(code).then(function (result) {
+        alert('ログインしました！')
+        location.href="index2.html";  
+      }).catch(function (error) {
+        console.log(error);
+        // User couldn't sign in (bad verification code?)
+        // ...
+      });
+    }
+  </script>
+</body>
+<footer>
+  BizDiverse
+</footer>
+</html>

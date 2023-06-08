@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+  <h1 class="login">ログイン画面（メール）</h1>
+  <div class="sms_center">
+  <input id="email" placeholder="Enter your email">
+  <input id="password" type="password" placeholder="Enter your password">
+  </div>
+
+  <div class="sms_center">
+  <button id="sign-up">会員登録</button>
+  <button id="sign-in">ログイン</button>
+  </div>
+  
+
+
+  <script>
+    // Firebaseの設定と初期化
+    const firebaseConfig = {
+
+    // Initialize Firebase
+    var app = firebase.initializeApp(firebaseConfig);
+
+    var signUpButton = document.getElementById('sign-up');
+    signUpButton.addEventListener('click', function() {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert('登録が完了しました');
+          location.href="index2.html"; 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+
+    var signInButton = document.getElementById('sign-in');
+    signInButton.addEventListener('click', function() {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+        location.href="index2.html";  
+          alert('ログインしました');
+
+        })
+        .catch((error) => {
+          alert('パスワードが違います！！');
+        });
+    });
+  </script>
+</body>
+
+<footer>
+  BizDiverse
+</footer>
+</html>
